@@ -21,7 +21,7 @@ def prep_telco():
 	telco.drop_duplicates(inplace=True)
 	telco.total_charges.replace(to_replace=[' ',''],value=np.nan,inplace=True)
 	telco['total_charges']=telco.total_charges.astype('float')
-	telco.drop(['customer_id','payment_type_id','contract_type_id','internet_service_type_id'],axis=1,inplace=True)
+	telco.drop(['payment_type_id','contract_type_id','internet_service_type_id'],axis=1,inplace=True)
 	dummy_list=[
 		'gender',
 		'partner',
@@ -117,9 +117,9 @@ def prep_telco():
 	->: train, validate, test 
 	<-: X_train, y_train, X_validate, y_validate, X_test, y_test
 	'''
-	X_train = train.drop(columns=target)
+	X_train = train.drop(columns=[target[0],'customer_id'])
 	y_train = train[target]
-	X_validate = validate.drop(columns=target)
+	X_validate = validate.drop(columns=[target[0],'customer_id'])
 	y_validate = validate[target]
 	X_test = test.drop(columns=target)
 	y_test = test[target]
